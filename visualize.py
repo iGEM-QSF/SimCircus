@@ -6,16 +6,15 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, \
     NavigationToolbar2TkAgg
 
 #from matplotlib import pyplot as plt
-
+import random
 from matplotlib.figure import Figure
 
+import threading
 import sys
 if sys.version_info[0] < 3:
     import Tkinter as Tk
 else:
     import tkinter as Tk
-
-from sim import Simulation
 
 
 class Visualization(object):
@@ -28,20 +27,16 @@ class Visualization(object):
         self.toggle_list = [1 for i in simulation.data.keys()]
         self.colors = ['b', 'g', 'r', 'c', 'm', 'y', 'k', 'w']
 
+    def start(self):
+
         #Tkinter related actions
         self.root = Tk.Tk()
         self.root.wm_title("SimCircus by Aalto-Helsinki")
 
         button = Tk.Button(master=self.root, text='Quit', command=self._quit)
         button.pack(side=Tk.BOTTOM)
-        #b = Tk.Button(master=self.root, text='Update', command=self.update)
-        #b.pack(side=Tk.BOTTOM)
-
-        self.start()
-
-        Tk.mainloop()
-
-    def start(self):
+        b = Tk.Button(master=self.root, text='Run', command=self.simulation.run)
+        b.pack(side=Tk.BOTTOM)
 
         self.button_frame = Tk.Frame(self.root)
 
@@ -68,7 +63,9 @@ class Visualization(object):
         self.toolbar.update()
         self.canvas._tkcanvas.pack(side=Tk.TOP, fill=Tk.BOTH, expand=1)
 
-        self.update()
+        self.root.after(0, self.simulation.start)
+
+        self.root.mainloop()
 
     def update(self):
         '''
@@ -106,8 +103,30 @@ class Visualization(object):
         self.root.destroy()  # this is necessary on Windows to prevent
                     # Fatal Python Error: PyEval_RestoreThread: NULL tstate
 
-sim = Simulation("asd")
-vis = Visualization(sim)
+
+class FakeSimulation(threading.Thread):
+
+    def __init__(self):
+        #Threading actions
+        threading.Thread.__init__(self)
+        self.data = {
+            "Parameter 1": [],
+            "Parameter 2": []
+        }
+        self.timesteps = []
+        self.vis = Visualization(self)
+        self.vis.start()
+
+    def run(self):
+        for i in range(100):
+            print i
+            self.data["Parameter 1"].append(random.randint(1, 15))
+            self.data["Parameter 2"].append(random.randint(1, 15))
+            self.timesteps.append(i)
+            self.vis.update()
+
+
+sim = FakeSimulation()
 #vis.visualize()
 
 
