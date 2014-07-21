@@ -35,8 +35,6 @@ class Visualization(object):
 
         button = Tk.Button(master=self.root, text='Quit', command=self._quit)
         button.pack(side=Tk.BOTTOM)
-        b = Tk.Button(master=self.root, text='Run', command=self.simulation.run)
-        b.pack(side=Tk.BOTTOM)
 
         self.button_frame = Tk.Frame(self.root)
 
@@ -45,7 +43,7 @@ class Visualization(object):
         for ind, parameter in enumerate(self.simulation.data.keys()):
             temp = Tk.Button(
                 master=self.button_frame,
-                text=parameter + str(ind),
+                text=parameter,
                 command=lambda ind=ind: self.toggle(ind))
             temp.pack(side=Tk.TOP)
             buttons.append(temp)
@@ -127,21 +125,3 @@ class FakeSimulation(threading.Thread):
 
 
 sim = FakeSimulation()
-#vis.visualize()
-
-
-# implement the default mpl key bindings
-#from matplotlib.backend_bases import key_press_handler
-
-
-'''
-def on_key_event(event):
-    print('you pressed %s' % event.key)
-    #key_press_handler(event, canvas, toolbar)
-
-canvas.mpl_connect('key_press_event', on_key_event)
-'''
-
-
-# If you put root.destroy() here, it will cause an error if
-# the window is closed with the window manager.
