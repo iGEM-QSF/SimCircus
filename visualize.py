@@ -6,10 +6,8 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, \
     NavigationToolbar2TkAgg
 
 #from matplotlib import pyplot as plt
-import random
 from matplotlib.figure import Figure
 
-import threading
 import sys
 if sys.version_info[0] < 3:
     import Tkinter as Tk
@@ -18,7 +16,67 @@ else:
 
 
 class Visualization(object):
-    """docstring for Visualization"""
+    """
+    Visualization is a class for visualizing any kind of time series data in
+    real time.
+
+    @requires:
+    simulation, object
+        @attrs
+        simulation.data, dictionary
+            Includes all the parameter names as keys and the time series
+            (list of values) as the values
+        simulation.timesteps
+            List of timesteps (float or integer),
+            same dimension as every paramter
+
+    start()
+        Initializes the GUI, required to visualize the simulation
+
+    update()
+        Updates the data in the graph
+        start() has to be run before calling this function
+
+    Example 1:
+        vis = Visualization(simulation)
+        vis.start()
+        for i in range(1000):
+            simulation.iteration()
+            vis.update()
+
+    The previous example updates the simulation data in each timestep
+
+    Example 2:
+        import random
+        import threading
+        class FakeSimulation(threading.Thread):
+
+            def __init__(self):
+                #Threading actions, non threaded example may be feasible
+                #now that a new visualization version was made.
+                threading.Thread.__init__(self)
+                self.data = {
+                    "Parameter 1": [],
+                    "Parameter 2": []
+                }
+                self.timesteps = []
+                self.vis = Visualization(self)
+                self.vis.start()
+
+            def run(self):
+                for i in range(100):
+                    print i
+                    self.data["Parameter 1"].append(random.randint(1, 15))
+                    self.data["Parameter 2"].append(random.randint(1, 15))
+                    self.timesteps.append(i)
+                    self.vis.update()
+
+
+        sim = FakeSimulation()
+        sim.start() #May not be necessary
+
+    The example 2 is a ready copy-and-paste demonstration of how this works.
+    """
 
     def __init__(self, simulation):
         #Initialize drawing parameters
@@ -31,7 +89,7 @@ class Visualization(object):
 
         #Tkinter related actions
         self.root = Tk.Tk()
-        self.root.wm_title("SimCircus by Aalto-Helsinki")
+        self.root.wm_title('SimCircusVisualizer 3000 Ultra+ by Aalto-Helsinki')
 
         button = Tk.Button(master=self.root, text='Quit', command=self._quit)
         button.pack(side=Tk.BOTTOM)
@@ -102,26 +160,3 @@ class Visualization(object):
                     # Fatal Python Error: PyEval_RestoreThread: NULL tstate
 
 
-class FakeSimulation(threading.Thread):
-
-    def __init__(self):
-        #Threading actions
-        threading.Thread.__init__(self)
-        self.data = {
-            "Parameter 1": [],
-            "Parameter 2": []
-        }
-        self.timesteps = []
-        self.vis = Visualization(self)
-        self.vis.start()
-
-    def run(self):
-        for i in range(100):
-            print i
-            self.data["Parameter 1"].append(random.randint(1, 15))
-            self.data["Parameter 2"].append(random.randint(1, 15))
-            self.timesteps.append(i)
-            self.vis.update()
-
-
-sim = FakeSimulation()
