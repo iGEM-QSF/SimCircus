@@ -35,9 +35,9 @@ class Simulation(object):
         self.hajTetR = 1
         self.timeStep = 0.2
         self.maxTime =  5
-        self.allData = {'YF1':[self.yf1], 'PYF1':[self.pyf1], 'FixJ':[self.fixj], 'PFixJ':[self.pfixj], 'CI':[self.ci], 'TetR':[self.tetr], 'A':[self.a], 'B':[self.b], 'C':[self.c]}
+        self.data = {'YF1':[self.yf1], 'PYF1':[self.pyf1], 'FixJ':[self.fixj], 'PFixJ':[self.pfixj], 'CI':[self.ci], 'TetR':[self.tetr], 'A':[self.a], 'B':[self.b], 'C':[self.c]}
 
-        self.timesteps = 0
+        self.timesteps = []
         '''self.data = {
             "Dummydata": [1, cos(2), 3, 4, 5, 6, 8, 3, 7, 3, 7, 3],
             "dammydata": [cos(x) for x in self.timesteps]
@@ -70,7 +70,7 @@ class Simulation(object):
         Get the current amount of selected protein 
         '''
        
-        return self.allData.get(protein)[len(self.allData.get(protein))-1]
+        return self.data.get(protein)[len(self.data.get(protein))-1]
 
     def derivativeYF1(self, protein): 
 
@@ -121,7 +121,7 @@ class Simulation(object):
         '''
 
         for i in range(int(self.maxTime/self.timeStep) + 1):
-            for key in self.allData:
+            for key in self.data:
                 if key == 'A' or key == 'B' or key == 'C': 
                     pass
                 else:
@@ -130,9 +130,10 @@ class Simulation(object):
                     kerroin2 = self.derivativeSelect(key, (x+(kerroin1)*self.timeStep/2))
                     kerroin3 = self.derivativeSelect(key, (x+(kerroin2)*self.timeStep/2))
                     kerroin4 = self.derivativeSelect(key, (x+(kerroin3)*self.timeStep))
-                    self.allData.get(key).append(x+(self.timeStep/6)*(kerroin1+2*kerroin2+2*kerroin3+kerroin4))
+                    self.data.get(key).append(x+(self.timeStep/6)*(kerroin1+2*kerroin2+2*kerroin3+kerroin4)) 
+                    self.timesteps.append(i)
 
 
     def testY(self): 
-        print self.allData
+        print self.data
             
