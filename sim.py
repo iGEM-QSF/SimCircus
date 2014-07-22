@@ -14,7 +14,7 @@ class Simulation(object):
         self.fixj = 0
         self.pfixj = 0
         self.ci = 0
-        self.tetr = 0 
+        self.tetr = 0
         self.a = 0
         self.b = 0
         self.c = 0
@@ -60,23 +60,23 @@ class Simulation(object):
         '''
         Iterates through the simultaion steps
         '''
-        '''for i in range(self.MaxTime/self.step + 1): 
+        '''for i in range(self.MaxTime/self.step + 1):
         '''
-        pass 
+        pass
 
 
-    def getAmount(self, protein): 
+    def getAmount(self, protein):
         '''
-        Get the current amount of selected protein 
+        Get the current amount of selected protein
         '''
-       
+
         return self.allData.get(protein)[len(self.allData.get(protein))-1]
 
-    def derivativeYF1(self, protein): 
+    def derivativeYF1(self, protein):
 
         return self.p1*self.rbs1+self.dep1*self.getAmount('PYF1')-(self.hajYF1+self.ib)*protein
 
-    def derivativePYF1(self, protein): 
+    def derivativePYF1(self, protein):
 
         return self.ib*self.getAmount('YF1')-(self.dep1+self.hajYF1)*protein
 
@@ -84,55 +84,55 @@ class Simulation(object):
 
         return self.p1*self.rbs1+self.dep2*self.getAmount('PFixJ')-(self.phosp*self.getAmount('PYF1')+self.hajFixJ)*protein
 
-    def derivativePFixJ(self, protein): 
+    def derivativePFixJ(self, protein):
 
         return self.phosp*self.getAmount('FixJ')*self.getAmount('PYF1')-(self.dep2+self.hajFixJ)*protein
 
-    def derivativeCI(self, protein): 
-    
-        return self.p2*self.rbs1-self.hajCI*protein 
+    def derivativeCI(self, protein):
 
-    def derivativeTetR(self, protein): 
+        return self.p2*self.rbs1-self.hajCI*protein
 
-        return (self.p3+self.p4)*self.rbs2-self.hajTetR*protein    
+    def derivativeTetR(self, protein):
 
-    def derivativeSelect(self, name, protein):  
+        return (self.p3+self.p4)*self.rbs2-self.hajTetR*protein
 
-        ''' 
-        Select appropriate derivative 
+    def derivativeSelect(self, name, protein):
+
+        '''
+        Select appropriate derivative
         '''
 
-        if name == 'YF1': 
+        if name == 'YF1':
             return self.derivativeYF1(protein)
-        elif name == 'PYF1': 
-            return self.derivativePYF1(protein) 
-        elif name == 'FixJ': 
+        elif name == 'PYF1':
+            return self.derivativePYF1(protein)
+        elif name == 'FixJ':
             return self.derivativeFixJ(protein)
-        elif name == 'PFixJ': 
-            return self.derivativePFixJ(protein) 
-        elif name == 'CI': 
-            return self.derivativeCI(protein) 
-        elif name == 'TetR': 
-            return self.derivativeTetR(protein) 
+        elif name == 'PFixJ':
+            return self.derivativePFixJ(protein)
+        elif name == 'CI':
+            return self.derivativeCI(protein)
+        elif name == 'TetR':
+            return self.derivativeTetR(protein)
 
-    def rungekutta(self):  
-        ''' 
-        Runge-Kutta computation for protein concentrations 
+    def rungekutta(self):
+        '''
+        Runge-Kutta computation for protein concentrations
         '''
 
         for i in range(int(self.maxTime/self.timeStep) + 1):
             for key in self.allData:
-                if key == 'A' or key == 'B' or key == 'C': 
+                if key == 'A' or key == 'B' or key == 'C':
                     pass
                 else:
                     x = self.getAmount(key)
-                    kerroin1 = self.derivativeSelect(key, x) 
+                    kerroin1 = self.derivativeSelect(key, x)
                     kerroin2 = self.derivativeSelect(key, (x+(kerroin1)*self.timeStep/2))
                     kerroin3 = self.derivativeSelect(key, (x+(kerroin2)*self.timeStep/2))
                     kerroin4 = self.derivativeSelect(key, (x+(kerroin3)*self.timeStep))
-                    self.allData.get(key).append(x+(self.timeStep/6)*(kerroin1+2*kerroin2+2*kerroin3+kerroin4))
+                    self.data.get(key).append(x+(self.timeStep/6)*(kerroin1+2*kerroin2+2*kerroin3+kerroin4))
 
 
-    def testY(self): 
+    def testY(self):
         print self.allData
-            
+
