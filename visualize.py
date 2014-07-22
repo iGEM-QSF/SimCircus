@@ -158,5 +158,3 @@ class Visualization(object):
         self.root.quit()     # stops mainloop
         self.root.destroy()  # this is necessary on Windows to prevent
                     # Fatal Python Error: PyEval_RestoreThread: NULL tstate
-
-
