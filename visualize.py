@@ -83,7 +83,7 @@ class Visualization(object):
         self.simulation = simulation
         self.legend = simulation.data.keys()
         self.toggle_list = [1 for i in simulation.data.keys()]
-        self.colors = ['b', 'g', 'r', 'c', 'm', 'y', 'k', 'w', 'b:']
+        self.colors = ['b', 'g', 'r', 'c', 'm', 'y', 'k', 'm:', 'b:']
 
     def start(self):
 
