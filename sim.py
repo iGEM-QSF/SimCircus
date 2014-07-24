@@ -1,11 +1,14 @@
 from math import *
 from visualize import Visualization
 
+import threading
 
-class Simulation(object):
+
+class Simulation(threading.Thread):
     """docstring for Simulation"""
 
     def __init__(self):
+        threading.Thread.__init__(self)
         '''
         Ask/define the parameters
         '''
@@ -45,7 +48,7 @@ class Simulation(object):
             'A': [self.a],
             'B': [self.b],
             'C': [self.c]
-            }
+        }
         self.timesteps = [0]
         self.visualization = Visualization(self)
         self.visualization.start()
@@ -69,7 +72,6 @@ class Simulation(object):
         '''for i in range(self.MaxTime/self.step + 1):
         '''
         pass
-
 
     def getAmount(self, protein):
         '''
@@ -116,7 +118,7 @@ class Simulation(object):
         elif name == 'TetR':
             return self.derivativeTetR(protein)
 
-    def start(self):
+    def run(self):
         '''
         Runge-Kutta computation for protein concentrations
         '''
@@ -138,12 +140,12 @@ class Simulation(object):
             self.timesteps.append(i + 1)
             self.visualization.update()
             if i == 50:
-                self.ib = 1
+                #self.ib = 1
                 self.p2 = 0.5
                 self.p3 = 0
                 self.p4 = 1
             if i == 100:
-                self.ib = 2
+                #self.ib = 2
                 self.p2 = 1
                 self.p4 = 0
 
