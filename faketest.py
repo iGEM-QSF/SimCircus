@@ -20,12 +20,10 @@ class FakeSimulation(threading.Thread):
 
     def run(self):
         for i in range(100):
-            print self.ib
-            self.data["Parameter 1"].append(random.randint(1, 15))
-            self.data["Parameter 2"].append(random.randint(1, 15))
+            self.data["Parameter 1"].append(random.randint(1, 15) * float(self.ib))
+            self.data["Parameter 2"].append(random.randint(1, 15) * float(self.ib))
             self.timesteps.append(i)
             self.vis.update()
 
 
 sim = FakeSimulation()
-sim.start()
