@@ -29,6 +29,8 @@ class Visualization(object):
         simulation.timesteps
             List of timesteps (float or integer),
             same dimension as every paramter
+        simulation.ib, float
+            Blue light intensity parameter with value between 0.0 and 1.0
 
     start()
         Initializes the GUI, required to visualize the simulation
@@ -94,6 +96,7 @@ class Visualization(object):
         button = Tk.Button(master=self.root, text='Quit', command=self._quit)
         button.pack(side=Tk.BOTTOM)
 
+        # Creating the right sidebar
         self.button_frame = Tk.Frame(self.root)
 
         buttons = []
@@ -106,11 +109,22 @@ class Visualization(object):
             temp.pack(side=Tk.TOP)
             buttons.append(temp)
 
+        self.intensity = Tk.DoubleVar()
+        scale = Tk.Scale(
+            self.button_frame,
+            variable=self.intensity,
+            label="Light intensity",
+            from_=0.0,
+            to=1.0,
+            resolution=0.01,
+            command=self.set_intensity)
+        scale.pack(side=Tk.BOTTOM)
+
         self.button_frame.pack(side=Tk.RIGHT)
 
+        # DrawingArea
         self.figure = Figure(figsize=(10, 8), dpi=100)
 
-        # tk.DrawingArea
         self.canvas = FigureCanvasTkAgg(self.figure, master=self.root)
         self.canvas.show()
         self.canvas.get_tk_widget().pack(side=Tk.TOP, fill=Tk.BOTH, expand=1)
@@ -146,6 +160,9 @@ class Visualization(object):
         a.legend(active_legend, "upper right")
         self.canvas.show()
         self.toolbar.update()
+
+    def set_intensity(self, current_value):
+        self.simulation.ib = current_value
 
     def toggle(self, ind):
         if self.toggle_list[ind]:
