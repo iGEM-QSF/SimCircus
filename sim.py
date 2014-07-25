@@ -1,11 +1,14 @@
 from math import *
 from visualize import Visualization
 
+import threading
 
-class Simulation(object):
+
+class Simulation(threading.Thread):
     """docstring for Simulation"""
 
     def __init__(self):
+        threading.Thread.__init__(self)
         '''
         Ask/define the parameters
         '''
@@ -37,7 +40,7 @@ class Simulation(object):
         self.degCoeffB = 0.5
         self.degCoeffC = 0.5
         self.timeStep = 0.1
-        self.iterations = 150
+        self.iterations = 300
         self.data = {
             'YF1': [self.yf1],
             'PYF1': [self.pyf1],
@@ -48,7 +51,7 @@ class Simulation(object):
             'A': [self.a],
             'B': [self.b],
             'C': [self.c]
-            }
+        }
         self.timesteps = [0]
         self.visualization = Visualization(self)
         self.visualization.start()
@@ -72,7 +75,6 @@ class Simulation(object):
         '''for i in range(self.MaxTime/self.step + 1):
         '''
         pass
-
 
     def getAmount(self, protein):
         '''
@@ -134,13 +136,13 @@ class Simulation(object):
         elif name == 'C':
             return self.derivativeC(protein)
 
-    #def promotorUpdate(self):
-    #    self.promotor2 = 5 * self.getAmount('PFixJ')
-    #    self.promotor3 = 1 / (self.getAmount('CI') + 0.0000001)
+    def promotorUpdate(self):
+        self.promotor2 = 5 * self.getAmount('PFixJ')
+        self.promotor3 = 1 / (1 + self.getAmount('CI') ** 2)
     #    self.promotor4 =
     #    self.promotor5 =
 
-    def start(self):
+    def run(self):
         '''
         Runge-Kutta computation for protein concentrations
         '''
@@ -157,18 +159,19 @@ class Simulation(object):
                 self.data.get(key).append(
                     x + (self.timeStep / 6) * (coeff1 + 2 * coeff2 + 2 * coeff3 + coeff4))
             self.timesteps.append(i + 1)
-            #self.promotorUpdate()
+            self.promotorUpdate()
             self.visualization.update()
-            if i == 50:
-                self.ib = 0.5
-                self.promotor2 = 0.5
-                self.promotor3 = 0
-                self.promotor4 = 1
-            if i == 100:
-                self.ib = 1
-                self.promotor2 = 1
-                self.promotor4 = 0
-                self.promotor5 = 1
+            #if i == 50:
+            #    self.ib = 0.5
+            #    self.promotor2 = 0.5
+            #    self.promotor3 = 0
+            #    self.promotor4 = 1
+            #if i == 100:
+            #    self.ib = 1
+            #    self.promotor2 = 1
+            #    self.promotor4 = 0
+            #    self.promotor5 = 1
+
 
 #    def testY(self):
 #        print self.data

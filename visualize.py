@@ -162,7 +162,7 @@ class Visualization(object):
         self.toolbar.update()
 
     def set_intensity(self, current_value):
-        self.simulation.ib = current_value
+        self.simulation.ib = float(current_value)
 
     def toggle(self, ind):
         if self.toggle_list[ind]:
