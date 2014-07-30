@@ -23,9 +23,9 @@ class Simulation(threading.Thread):
         self.c = 0
         self.promotor1 = 1
         self.promotor2 = 0
-        self.promotor3 = 1
-        self.promotor4 = 0
-        self.promotor5 = 0
+        self.promotorA = 1
+        self.promotorB = 0
+        self.promotorC = 0
         self.rbs1 = 1
         self.rbs2 = 0.75
         self.dePhosCoeff1 = 0.5
@@ -36,11 +36,11 @@ class Simulation(threading.Thread):
         self.degCoeffFixJ = 1
         self.degCoeffCI = 1
         self.degCoeffTetR = 1
-        self.degCoeffA = 0.5
-        self.degCoeffB = 0.5
-        self.degCoeffC = 0.5
+        self.degCoeffA = 0.1
+        self.degCoeffB = 0.1
+        self.degCoeffC = 0.1
         self.timeStep = 0.1
-        self.iterations = 300
+        self.iterations = 600
         self.data = {
             'YF1': [self.yf1],
             'PYF1': [self.pyf1],
@@ -102,16 +102,16 @@ class Simulation(threading.Thread):
         return self.promotor2 * self.rbs1 - self.degCoeffCI * protein
 
     def derivativeTetR(self, protein):
-        return (self.promotor3 + self.promotor4) * self.rbs2 - self.degCoeffTetR * protein
+        return (self.promotorA + self.promotorB) * self.rbs2 - self.degCoeffTetR * protein
 
     def derivativeA(self, protein):
-        return self.promotor3 * self.rbs1 - self.degCoeffA * protein
+        return self.promotorA * self.rbs1 - self.degCoeffA * protein
 
     def derivativeB(self, protein):
-        return self.promotor4 * self.rbs1 - self.degCoeffB * protein
+        return self.promotorB * self.rbs1 - self.degCoeffB * protein
 
     def derivativeC(self, protein):
-        return self.promotor5 * self.rbs1 - self.degCoeffC * protein
+        return self.promotorC * self.rbs1 - self.degCoeffC * protein
 
     def derivativeSelect(self, name, protein):
         '''
@@ -137,10 +137,19 @@ class Simulation(threading.Thread):
             return self.derivativeC(protein)
 
     def promotorUpdate(self):
-        self.promotor2 = 5 * self.getAmount('PFixJ')
-        self.promotor3 = 1 / (1 + self.getAmount('CI') ** 2)
-    #    self.promotor4 =
-    #    self.promotor5 =
+        self.promotor2 = 7 * self.getAmount('PFixJ')
+        self.promotorA = 1 - self.getAmount('CI')
+        if self.getAmount('CI') < 1:
+            self.promotorB = 1 - self.promotorA
+        else:
+            self.promotorB = 1 - 2.5 * (self.getAmount('CI') - 1)
+        self.promotorC = 1 - (1 / 0.75) * self.getAmount('TetR')
+
+    def nonZero(self, data):
+        for key in data:
+            if self.getAmount(key) < 0:
+                self.data.get(key)[len(self.data.get(key)) - 1] = 0
+
 
     def run(self):
         '''
@@ -160,22 +169,23 @@ class Simulation(threading.Thread):
                     x + (self.timeStep / 6) * (coeff1 + 2 * coeff2 + 2 * coeff3 + coeff4))
             self.timesteps.append(i + 1)
             self.promotorUpdate()
+            self.nonZero(self.data)
             self.visualization.update()
             #if i == 50:
             #    self.ib = 0.5
             #    self.promotor2 = 0.5
-            #    self.promotor3 = 0
-            #    self.promotor4 = 1
+            #    self.promotorA = 0
+            #    self.promotorB = 1
             #if i == 100:
             #    self.ib = 1
             #    self.promotor2 = 1
-            #    self.promotor4 = 0
-            #    self.promotor5 = 1
+            #    self.promotorB = 0
+            #    self.promotorC = 1
 
 
-#    def testY(self):
-#        print self.data
-#        print self.timesteps
+    def testY(self):
+        print self.data
+        print self.timesteps
 
 sim = Simulation()
 

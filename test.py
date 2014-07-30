@@ -1,5 +1,4 @@
-from sim import Simulation 
+from sim import Simulation
 
-sirkus = Simulation() 
-sirkus.rungekutta()
+sirkus = Simulation()
 sirkus.testY()
