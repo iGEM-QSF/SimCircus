@@ -36,9 +36,9 @@ class Simulation(threading.Thread):
         self.degCoeffFixJ = 1
         self.degCoeffCI = 1
         self.degCoeffTetR = 1
-        self.degCoeffA = 0.1
-        self.degCoeffB = 0.1
-        self.degCoeffC = 0.1
+        self.degCoeffA = 0.5
+        self.degCoeffB = 0.5
+        self.degCoeffC = 0.5
         self.timeStep = 0.1
         self.iterations = 600
         self.data = {
@@ -56,26 +56,6 @@ class Simulation(threading.Thread):
         self.visualization = Visualization(self)
         self.visualization.start()
 
-#    def start(self):
-#        '''
-#        Start the simulation
-#        '''
-#        pass
-
-    def stop(self):
-        '''
-        stop the simulation
-        '''
-        pass
-
-    def cycle(self):
-        '''
-        Iterates through the simultaion steps
-        '''
-        '''for i in range(self.MaxTime/self.step + 1):
-        '''
-        pass
-
     def getAmount(self, protein):
         '''
         Get the current amount of selected protein
@@ -83,26 +63,29 @@ class Simulation(threading.Thread):
         return self.data.get(protein)[len(self.data.get(protein)) - 1]
 
     def derivativeYF1(self, protein):
-        return self.promotor1 * self.rbs1 + self.dePhosCoeff1 * self.getAmount('PYF1') - \
-                (self.degCoeffYF1 + self.ib) * protein
+        return self.promotor1 * self.rbs1 + \
+            self.dePhosCoeff1 * self.getAmount('PYF1') - \
+            (self.degCoeffYF1 + self.ib) * protein
 
     def derivativePYF1(self, protein):
         return self.ib * self.getAmount('YF1') - \
-                (self.dePhosCoeff1 + self.degCoeffYF1) * protein
+            (self.dePhosCoeff1 + self.degCoeffYF1) * protein
 
     def derivativeFixJ(self, protein):
-        return self.promotor1 * self.rbs1 + self.dePhosCoeff2 * self.getAmount('PFixJ') - \
-                (self.phosp * self.getAmount('PYF1') + self.degCoeffFixJ) * protein
+        return self.promotor1 * self.rbs1 + \
+            self.dePhosCoeff2 * self.getAmount('PFixJ') - \
+            (self.phosp * self.getAmount('PYF1') + self.degCoeffFixJ) * protein
 
     def derivativePFixJ(self, protein):
         return self.phosp * self.getAmount('FixJ') * self.getAmount('PYF1') - \
-                (self.dePhosCoeff2 + self.degCoeffFixJ) * protein
+            (self.dePhosCoeff2 + self.degCoeffFixJ) * protein
 
     def derivativeCI(self, protein):
         return self.promotor2 * self.rbs1 - self.degCoeffCI * protein
 
     def derivativeTetR(self, protein):
-        return (self.promotorA + self.promotorB) * self.rbs2 - self.degCoeffTetR * protein
+        return (self.promotorA + self.promotorB) * self.rbs2 - \
+            self.degCoeffTetR * protein
 
     def derivativeA(self, protein):
         return self.promotorA * self.rbs1 - self.degCoeffA * protein
@@ -150,7 +133,6 @@ class Simulation(threading.Thread):
             if self.getAmount(key) < 0:
                 self.data.get(key)[len(self.data.get(key)) - 1] = 0
 
-
     def run(self):
         '''
         Runge-Kutta computation for protein concentrations
@@ -171,21 +153,5 @@ class Simulation(threading.Thread):
             self.promotorUpdate()
             self.nonZero(self.data)
             self.visualization.update()
-            #if i == 50:
-            #    self.ib = 0.5
-            #    self.promotor2 = 0.5
-            #    self.promotorA = 0
-            #    self.promotorB = 1
-            #if i == 100:
-            #    self.ib = 1
-            #    self.promotor2 = 1
-            #    self.promotorB = 0
-            #    self.promotorC = 1
-
-
-    def testY(self):
-        print self.data
-        print self.timesteps
 
 sim = Simulation()
-
