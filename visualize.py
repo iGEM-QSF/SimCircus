@@ -86,6 +86,7 @@ class Visualization(object):
         self.legend = simulation.data.keys()
         self.toggle_list = [1 for i in simulation.data.keys()]
         self.colors = ['b', 'g', 'r', 'c', 'm', 'y', 'k', 'm:', 'b:']
+        self.graph = 0
 
     def start(self):
 
@@ -131,6 +132,13 @@ class Visualization(object):
             command=self.set_red_intensity)
         scale_red.pack(side=Tk.BOTTOM)
 
+        toggle = Tk.Button(
+            master=self.button_frame,
+            text="Graph",
+            command=self.toggle_graph)
+
+        toggle.pack(side=Tk.TOP)
+
         self.button_frame.pack(side=Tk.RIGHT)
 
         # DrawingArea
@@ -148,6 +156,11 @@ class Visualization(object):
 
         self.root.mainloop()
 
+    def toggle_graph(self):
+        self.graph += 1
+        if self.graph == 3:
+            self.graph = 0
+
     def update(self):
         '''
         Visualizes the current situation
@@ -155,20 +168,51 @@ class Visualization(object):
         active_legend = [legend for ind, legend in enumerate(self.legend)
                          if self.toggle_list[ind]]
         self.figure.clf()
+        if self.graph in [0, 2]:
 
-        a = self.figure.add_subplot(
-            111,
-            xlabel="Time",
-            ylabel="Protein concentration")
+            subplot = 111
+            if self.graph == 2:
+                subplot = 211
 
-        for ind, parameter in enumerate(self.simulation.data.keys()):
-            if self.toggle_list[ind]:
-                a.plot(
-                    self.simulation.timesteps,
-                    self.simulation.data.get(parameter),
-                    self.colors[ind])
+            a = self.figure.add_subplot(
+                subplot,
+                xlabel="Time",
+                ylabel="Protein concentration")
 
-        a.legend(active_legend, "upper right")
+            for ind, parameter in enumerate(self.simulation.data.keys()):
+                if self.toggle_list[ind]:
+                    a.plot(
+                        self.simulation.timesteps,
+                        self.simulation.data.get(parameter),
+                        self.colors[ind])
+            a.set_xlim(0, max(self.simulation.timesteps))
+
+        if self.graph in [1, 2]:
+
+            subplot = 111
+            if self.graph == 2:
+                subplot = 212
+
+            a = self.figure.add_subplot(
+                subplot,
+                xlabel="Time",
+                ylabel="Protein concentration")
+
+            for ind, parameter in enumerate(self.simulation.data.keys()):
+                if self.toggle_list[ind]:
+                    a.plot(
+                        self.simulation.timesteps[-50:],
+                        self.simulation.data.get(parameter)[-50:],
+                        self.colors[ind])
+            a.set_xlim(
+                max([0, self.simulation.timesteps[max(
+                    [0, len(self.simulation.timesteps) - 50]
+                    )
+                ]]),
+                max(self.simulation.timesteps)
+            )
+
+        a.legend(active_legend, "upper left")
         self.canvas.show()
         self.toolbar.update()
 
