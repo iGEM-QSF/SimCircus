@@ -129,7 +129,7 @@ function _overlap(circ1, circ2) {
     return (dist < (c1.r + c2.r));
 }
 
-function setColonyColor(rgbString, circleList) {
+function setColonyColor(rgbString) {
     for (var i = 0; i < circleList.length; i++) {
         circleList[i].attr({
             fill: rgbString

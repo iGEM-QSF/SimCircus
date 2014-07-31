@@ -125,32 +125,46 @@ function promoterUpdate(){
     promoterC = (1 - red_intensity) * (1 - (1.75 / 0.75) * getAmount('TetR'));
 }
 
+function oneStep(i){
+    var keyList = Object.keys(data);
+    
+    for(var j = 0; j < keyList.length;j++){
+        x = getAmount(keyList[j]);
+        coeff1 = derivativeSelect(keyList[j], x);
+        coeff2 = derivativeSelect(
+            keyList[j], (x + (coeff1) * timeStep / 2));
+        coeff3 = derivativeSelect(
+            keyList[j], (x + (coeff2) * timeStep / 2));
+        coeff4 = derivativeSelect(
+            keyList[j], (x + (coeff3) * timeStep));
+        x = x + (timeStep / 6) * (coeff1 + 2 * coeff2 + 2 * coeff3 + coeff4);
+        if(x > 0){
+            data[(keyList[j])].push(x);
+        }
+        else{
+            data[(keyList[j])].push(0);
+        }
+    }
+    timesteps.push(i + 1);
+    promoterUpdate();
+    //console.log(data);
+    console.log(getAmount('A') + "," + getAmount('B') + "," + getAmount('C'));
+    console.log("RGB(" + (getAmount('A') * 225)  + ","  + (getAmount('B') * 225) + "," + (getAmount('C') * 225) + ")");
+    setColonyColor("RGB(" + (getAmount('A') * 225)  + ","  + (getAmount('B') * 225) + "," + (getAmount('C') * 225) + ")");
+}
+
 function run(){
     //Runge-Kutta computation for protein concentrations
-    for(var i = 0;i<iterations;i++){
-        var keyList = Object.keys(data);
-        
-        for(var j = 0; j < keyList.length;j++){
-            x = getAmount(keyList[j]);
-            coeff1 = derivativeSelect(keyList[j], x);
-            coeff2 = derivativeSelect(
-                keyList[j], (x + (coeff1) * timeStep / 2));
-            coeff3 = derivativeSelect(
-                keyList[j], (x + (coeff2) * timeStep / 2));
-            coeff4 = derivativeSelect(
-                keyList[j], (x + (coeff3) * timeStep));
-            x = x + (timeStep / 6) * (coeff1 + 2 * coeff2 + 2 * coeff3 + coeff4);
-            if(x > 0){
-                data[(keyList[j])].push(x);
-            }
-            else{
-                data[(keyList[j])].push(0);
-            }
-        }
-        timesteps.push(i + 1);
-        promoterUpdate();
-        console.log(data);
-    }
+    var i = 0;
+    setInterval(function() {
+        var light = getLightIntensities();
+        blue_intensity = light.blue/100;
+        red_intensity = light.red/100;
+        console.log(blue_intensity);
+        console.log(red_intensity);
+        i++;
+        oneStep(i);
+    }, 100)
 }
 
 run();
