@@ -1,6 +1,6 @@
 from math import *
 from visualize import Visualization
-
+import time
 import threading
 
 
@@ -154,5 +154,6 @@ class Simulation(threading.Thread):
             self.promotorUpdate()
             self.nonZero(self.data)
             self.visualization.update()
+        time.sleep(60)
 
 sim = Simulation()
