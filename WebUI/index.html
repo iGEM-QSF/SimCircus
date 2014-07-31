@@ -64,7 +64,6 @@
     #slider-right span, #slider-left span {
         width:120%;
     }
-
     </style>
 </meta>
 <body class="raphael">
@@ -142,6 +141,10 @@
         }
     }
 
+    window.onresize = function() {
+        location.reload();
+    }
+
     var landscape = true;
     if(window.innerHeight > window.innerWidth){
         landscape = false;
@@ -150,19 +153,22 @@
     console.log(landscape)
 
     /* Init drawing area */
-    var width = $(document).width();
-    var height = $(document).height();
+    var width = $(document).width()*0.8;
+    var height = $(document).height()*0.9;
+    var radius = Math.min(height,width)/2;
+    $("#paper1").css("margin-top", (0.05*$(document).height()).toString() + "px");
+    $("#paper1").css("margin-left", (0.1*$(document).width()).toString() + "px");
     console.log(height)
     console.log(width)
     var stroke = 10;
     var fade = 0;
     var paper = Raphael("paper1", width, height);
 
-    var arcRight = paper.circularArc(width/2,height/2,height/2-stroke,270,90).attr({
+    var arcRight = paper.circularArc(width/2,height/2,radius-stroke,270,90).attr({
         "stroke-width":10,
         stroke: "rgb(250,0,0)"
     });
-    var arcLeft = paper.circularArc(width/2,height/2,height/2-stroke,90,270).attr({
+    var arcLeft = paper.circularArc(width/2,height/2,radius-stroke,90,270).attr({
         "stroke-width":10,
         stroke: "rgb(50,50,255)"
     });
@@ -173,7 +179,7 @@
         var circleList = [];
         var centerX = width/2;
         var centerY = height/2;
-        var radius = (height-stroke)/2;
+        var radius = (Math.min(height, width)-stroke)/2;
         var distance = 0;
         var angle = 0;
         var size = 0;
