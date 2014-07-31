@@ -109,16 +109,27 @@ class Visualization(object):
             temp.pack(side=Tk.TOP)
             buttons.append(temp)
 
-        self.intensity = Tk.DoubleVar()
-        scale = Tk.Scale(
+        self.blue_intensity = Tk.DoubleVar()
+        scale_blue = Tk.Scale(
             self.button_frame,
-            variable=self.intensity,
-            label="Light intensity",
-            from_=0.0,
-            to=1.0,
+            variable=self.blue_intensity,
+            label="Blue intensity",
+            from_=1.0,
+            to=0.0,
             resolution=0.01,
-            command=self.set_intensity)
-        scale.pack(side=Tk.BOTTOM)
+            command=self.set_blue_intensity)
+        scale_blue.pack(side=Tk.BOTTOM)
+
+        self.red_intensity = Tk.DoubleVar()
+        scale_red = Tk.Scale(
+            self.button_frame,
+            variable=self.red_intensity,
+            label="Red intensity",
+            from_=1.0,
+            to=0.0,
+            resolution=0.01,
+            command=self.set_red_intensity)
+        scale_red.pack(side=Tk.BOTTOM)
 
         self.button_frame.pack(side=Tk.RIGHT)
 
@@ -161,8 +172,11 @@ class Visualization(object):
         self.canvas.show()
         self.toolbar.update()
 
-    def set_intensity(self, current_value):
-        self.simulation.ib = float(current_value)
+    def set_blue_intensity(self, current_value):
+        self.simulation.blue_intensity = float(current_value)
+
+    def set_red_intensity(self, current_value):
+        self.simulation.red_intensity = float(current_value)
 
     def toggle(self, ind):
         if self.toggle_list[ind]:

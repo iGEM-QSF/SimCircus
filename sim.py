@@ -31,7 +31,8 @@ class Simulation(threading.Thread):
         self.dePhosCoeff1 = 0.5
         self.dePhosCoeff2 = 0.5
         self.phosp = 1
-        self.ib = 0
+        self.blue_intensity = 0
+        self.red_intensity = 0  # for the intensity switch
         self.degCoeffYF1 = 1
         self.degCoeffFixJ = 1
         self.degCoeffCI = 1
@@ -65,10 +66,10 @@ class Simulation(threading.Thread):
     def derivativeYF1(self, protein):
         return self.promotor1 * self.rbs1 + \
             self.dePhosCoeff1 * self.getAmount('PYF1') - \
-            (self.degCoeffYF1 + self.ib) * protein
+            (self.degCoeffYF1 + self.blue_intensity) * protein
 
     def derivativePYF1(self, protein):
-        return self.ib * self.getAmount('YF1') - \
+        return self.blue_intensity * self.getAmount('YF1') - \
             (self.dePhosCoeff1 + self.degCoeffYF1) * protein
 
     def derivativeFixJ(self, protein):
@@ -121,12 +122,12 @@ class Simulation(threading.Thread):
 
     def promotorUpdate(self):
         self.promotor2 = 7 * self.getAmount('PFixJ')
-        self.promotorA = 1 - self.getAmount('CI')
+        self.promotorA = (1 - self.red_intensity) * (1 - self.getAmount('CI'))
         if self.getAmount('CI') < 1:
-            self.promotorB = 1 - self.promotorA
+            self.promotorB = (1 - self.red_intensity) * (self.getAmount('CI'))
         else:
-            self.promotorB = 1 - 2.5 * (self.getAmount('CI') - 1)
-        self.promotorC = 1 - (1 / 0.75) * self.getAmount('TetR')
+            self.promotorB = (1 - self.red_intensity) * (1 - 2.5 * (self.getAmount('CI') - 1))
+        self.promotorC = (1 - self.red_intensity) * (1 - (1.75 / 0.75) * self.getAmount('TetR'))
 
     def nonZero(self, data):
         for key in data:
