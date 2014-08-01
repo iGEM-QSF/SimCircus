@@ -147,10 +147,10 @@ function oneStep(i){
     }
     timesteps.push(i + 1);
     promoterUpdate();
-    //console.log(data);
-    console.log(getAmount('A') + "," + getAmount('B') + "," + getAmount('C'));
-    console.log("RGB(" + (getAmount('A') * 225)  + ","  + (getAmount('B') * 225) + "," + (getAmount('C') * 225) + ")");
-    setColonyColor("RGB(" + (getAmount('A') * 225)  + ","  + (getAmount('B') * 225) + "," + (getAmount('C') * 225) + ")");
+    console.log(data);
+    //console.log(getAmount('A') + "," + getAmount('B') + "," + getAmount('C'));
+    //console.log("RGB(" + (getAmount('A') * 225)  + ","  + (getAmount('B') * 225) + "," + (getAmount('C') * 225) + ")");
+    setColonyColor("RGB(" + (getAmount('A') * 125)  + ","  + (getAmount('B') * 125) + "," + (getAmount('C') * 125) + ")");
 }
 
 function run(){
