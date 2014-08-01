@@ -5,39 +5,78 @@ $("#chart").css("margin-left", (0.1*$(document).width()).toString() + "px");
 $("#chart").attr("width", width).attr("height", height);
 var context = $("#chart").get(0).getContext("2d");
 
-function updateChart() {
-    continue
+function updateChart(previous) {
+    previous ++;
+    console.log(previous)
+    console.log([
+        getAmount("A"),
+        getAmount("B"),
+        getAmount("C")])
+    console.log(graphChart)
+    graphChart.addData([
+        getAmount("A"),
+        getAmount("B"),
+        getAmount("C")],
+        previous);
+    if (previous > 50) {
+        graphChart.removeData();
+    }
+    if (previous < 10){
+    }
+    setTimeout(function(){
+        updateChart(previous)}, 200)
 }
 
-var data = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
+var plotData = {
+    labels: [0],
     datasets: [
         {
-            label: "My First dataset",
-            fillColor: "rgba(220,220,220,0.2)",
-            strokeColor: "rgba(220,220,220,1)",
+            label: "Red fluorescent protein",
+            fillColor: "rgba(255,0,0,0.05)",
+            strokeColor: "rgba(255,100,100,1)",
             pointColor: "rgba(220,220,220,1)",
             pointStrokeColor: "#fff",
             pointHighlightFill: "#fff",
             pointHighlightStroke: "rgba(220,220,220,1)",
-            data: [65, 59, 80, 81, 56, 55, 40]
+            data: [0]
         },
         {
-            label: "My Second dataset",
-            fillColor: "rgba(151,187,205,0.2)",
-            strokeColor: "rgba(151,187,205,1)",
+            label: "Green fluorescent protein",
+            fillColor: "rgba(0,255,0,0.05)",
+            strokeColor: "rgba(100,255,100,1)",
             pointColor: "rgba(151,187,205,1)",
             pointStrokeColor: "#fff",
             pointHighlightFill: "#fff",
             pointHighlightStroke: "rgba(151,187,205,1)",
-            data: [28, 48, 40, 19, 86, 27, 90]
+            data: [0]
+        },
+        {
+            label: "Blue fluorescent protein",
+            fillColor: "rgba(0,0,255,0.05)",
+            strokeColor: "rgba(100,100,255,1)",
+            pointColor: "rgba(151,187,205,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(151,187,205,1)",
+            data: [0]
         }
     ]
 };
+
 var options = {
-    bezierCurve: true
+    bezierCurve: false,
+    animationEasing: "",
+    pointDot: false,
+    animation: false,
+    scaleOverride: true,
+    scaleSteps: 20,
+    // Number - The value jump in the hard coded scale
+    scaleStepWidth: 0.1,
+    // Number - The scale starting value
+    scaleStartValue: 0,
+
 };
-var graphChart = new Chart(context).Line(data, options);
+var graphChart = new Chart(context).Line(plotData, options);
 $("#data-visualization").click(function(){
     $("#data-visualization").fadeOut()
 })
@@ -45,4 +84,5 @@ $("#paper1").click(function(){
     $("#data-visualization").fadeIn()
 })
 
-setTimeout(updateChart, 500);
+setTimeout(function(){
+    updateChart(0)}, 100);
