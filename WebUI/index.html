@@ -1,29 +1,34 @@
 <html>
-<meta>
-    <title>SimCircus WebUI</title>
-    <link href="jquery-ui/jquery-ui.css" rel="stylesheet">
-    <link href="styles.css" rel="stylesheet">
-    <style type="text/css">
+    <meta>
+        <title>SimCircus WebUI</title>
+        <link href="jquery-ui/jquery-ui.css" rel="stylesheet">
+        <link href="styles.css" rel="stylesheet">
+        <style type="text/css">
 
-    </style>
-</meta>
-<body class="raphael">
-    <div id="alert">
-        <span>Please turn your device horizontally</span>
-    </div>
-    <div id="left">
-        <img id="bulb-left" src="bulb.svg"/>
-        <div id="slider-left"></div>
-    </div>
-    <div id="right">
-        <img id="bulb-right" src="bulb.svg"/>
-        <div id="slider-right"></div>
-    </div>
-    <div id="paper1"></div>
-</body>
-<script type="text/javascript" src="raphael-min.js"></script>
-<script src="jquery-ui/external/jquery/jquery.js"></script>
-<script src="jquery-ui/jquery-ui.js"></script>
-<script src="jquery.ui.touch-punch.min.js"></script>
-<script type="text/javascript" src="plate.js"></script>
+        </style>
+    </meta>
+    <body class="raphael">
+        <div id="alert">
+            <span>Please turn your device horizontally</span>
+        </div>
+        <div id="left">
+            <img id="bulb-left" src="bulb.svg"/>
+            <div id="slider-left"></div>
+        </div>
+        <div id="right">
+            <img id="bulb-right" src="bulb.svg"/>
+            <div id="slider-right"></div>
+        </div>
+        <div id="paper1"></div>
+        <div id="data-visualization">
+            <canvas id="chart" width="400" height="400"></canvas>
+        </div>
+    </body>
+    <script type="text/javascript" src="raphael-min.js"></script>
+    <script src="jquery-ui/external/jquery/jquery.js"></script>
+    <script src="jquery-ui/jquery-ui.js"></script>
+    <script src="jquery.ui.touch-punch.min.js"></script>
+    <script type="text/javascript" src="plate.js"></script>
+    <script src="Chart.min.js"></script>
+    <script type="text/javascript" src="chart.js"></script>
 </html>
