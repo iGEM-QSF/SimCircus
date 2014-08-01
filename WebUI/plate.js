@@ -102,7 +102,7 @@ function drawCircles() {
         size = (15+Math.random()*30)*centerY/500;
         distance = Math.random()*radius-size-stroke;
         angle = Math.random()*2*Math.PI;
-        tmp = paper.circle(centerX+Math.cos(angle)*distance, centerY+Math.sin(angle)*distance, size)
+        tmp = paper.circle(centerX+Math.cos(angle)*distance, centerY+Math.sin(angle)*distance, size).attr({'stroke-opacity': 0})
         if (overlap(tmp, circleList)){
             i --;
             tmp.remove()
@@ -132,7 +132,7 @@ function _overlap(circ1, circ2) {
 function setColonyColor(rgbString) {
     for (var i = 0; i < circleList.length; i++) {
         circleList[i].attr({
-            fill: rgbString
+            fill: 'r(0.5, 0.5)' + rgbString + "-" + rgbString +':'+ 2.5*circleList[i].attr("r") +'-rgb(255,255,255)'
         })
     }
 }
