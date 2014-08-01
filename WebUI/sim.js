@@ -147,10 +147,12 @@ function oneStep(i){
     }
     timesteps.push(i + 1);
     promoterUpdate();
-    //console.log(data);
-    //console.log(getAmount('A') + "," + getAmount('B') + "," + getAmount('C'));
-    //console.log("RGB(" + (getAmount('A') * 225)  + ","  + (getAmount('B') * 225) + "," + (getAmount('C') * 225) + ")");
-    setColonyColor("RGB(" + (getAmount('A') * 125)  + ","  + (getAmount('B') * 125) + "," + (getAmount('C') * 125) + ")");
+    var R = 200 + (getAmount('A') * 27.5) - (getAmount('B') * 45) - (getAmount('C') * 45); 
+    var G = 185 + (getAmount('B') * 35) - (getAmount('A') * 40) - (getAmount('C') * 40);
+    var B = 125 + (getAmount('C') * 65) - (getAmount('B') * 25) - (getAmount('C') * 25);
+    // A = red, B = green, C = blue. They reduce the others to make the colors more vivid.
+    // The base values for each color are for a nice E.Coli light brown.
+    setColonyColor("RGB(" + R  + ","  + G + "," + B + ")");
 }
 
 function run(){
@@ -159,9 +161,9 @@ function run(){
     setInterval(function() {
         var light = getLightIntensities();
         blue_intensity = light.blue/100;
-        red_intensity = light.red/100;
-        //console.log(blue_intensity);
-        //console.log(red_intensity);
+        red_intensity = 1 - light.red/100;
+        console.log(blue_intensity);
+        console.log(red_intensity);
         i++;
         oneStep(i);
     }, 100)
