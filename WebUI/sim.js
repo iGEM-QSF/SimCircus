@@ -38,7 +38,7 @@
                 "B":[b],
                 "C":[c]
             }
-    var timesteps = [0]; // ?? 
+    var timesteps = [0]; // ??
     //var visualization = Visualization(self) // ??
     //var visualization.start() // ??
 
@@ -127,7 +127,7 @@ function promoterUpdate(){
 
 function oneStep(i){
     var keyList = Object.keys(data);
-    
+
     for(var j = 0; j < keyList.length;j++){
         x = getAmount(keyList[j]);
         coeff1 = derivativeSelect(keyList[j], x);
@@ -147,7 +147,7 @@ function oneStep(i){
     }
     timesteps.push(i + 1);
     promoterUpdate();
-    console.log(data);
+    //console.log(data);
     //console.log(getAmount('A') + "," + getAmount('B') + "," + getAmount('C'));
     //console.log("RGB(" + (getAmount('A') * 225)  + ","  + (getAmount('B') * 225) + "," + (getAmount('C') * 225) + ")");
     setColonyColor("RGB(" + (getAmount('A') * 125)  + ","  + (getAmount('B') * 125) + "," + (getAmount('C') * 125) + ")");
@@ -160,8 +160,8 @@ function run(){
         var light = getLightIntensities();
         blue_intensity = light.blue/100;
         red_intensity = light.red/100;
-        console.log(blue_intensity);
-        console.log(red_intensity);
+        //console.log(blue_intensity);
+        //console.log(red_intensity);
         i++;
         oneStep(i);
     }, 100)
