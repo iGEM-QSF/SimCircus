@@ -147,13 +147,12 @@ function oneStep(i){
     }
     timesteps.push(i + 1);
     promoterUpdate();
-    //console.log(getAmount('A') + "," + getAmount('B') + "," + getAmount('C'));
-    //console.log("RGB(" + (getAmount('A') * 225)  + ","  + (getAmount('B') * 225) + "," + (getAmount('C') * 225) + ")");
-    var R = 200 + (getAmount('A') * 27.5) - (getAmount('B') * 45) - (getAmount('C') * 45);
+    var R = 200 + (getAmount('A') * 27.5) - (getAmount('B') * 45) - (getAmount('C') * 45); 
     var G = 185 + (getAmount('B') * 35) - (getAmount('A') * 40) - (getAmount('C') * 40);
     var B = 125 + (getAmount('C') * 65) - (getAmount('B') * 25) - (getAmount('C') * 25);
+    // A = red, B = green, C = blue. They reduce the others to make the colors more vivid.
+    // The base values for each color are for a nice E.Coli light brown.
     setColonyColor("RGB(" + R  + ","  + G + "," + B + ")");
-
 }
 
 function run(){
