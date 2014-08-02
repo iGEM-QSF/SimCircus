@@ -7,12 +7,6 @@ var context = $("#chart").get(0).getContext("2d");
 
 function updateChart(previous) {
     previous ++;
-    console.log(previous)
-    console.log([
-        getAmount("A"),
-        getAmount("B"),
-        getAmount("C")])
-    console.log(graphChart)
     graphChart.addData([
         getAmount("A"),
         getAmount("B"),

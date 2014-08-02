@@ -147,7 +147,7 @@ function oneStep(i){
     }
     timesteps.push(i + 1);
     promoterUpdate();
-    var R = 200 + (getAmount('A') * 27.5) - (getAmount('B') * 45) - (getAmount('C') * 45); 
+    var R = 200 + (getAmount('A') * 27.5) - (getAmount('B') * 45) - (getAmount('C') * 45);
     var G = 185 + (getAmount('B') * 35) - (getAmount('A') * 40) - (getAmount('C') * 40);
     var B = 125 + (getAmount('C') * 65) - (getAmount('B') * 25) - (getAmount('C') * 25);
     // A = red, B = green, C = blue. They reduce the others to make the colors more vivid.
@@ -162,8 +162,8 @@ function run(){
         var light = getLightIntensities();
         blue_intensity = light.blue/100;
         red_intensity = 1 - light.red/100;
-        console.log(blue_intensity);
-        console.log(red_intensity);
+        //console.log(blue_intensity);
+        //console.log(red_intensity);
         i++;
         oneStep(i);
     }, 100)

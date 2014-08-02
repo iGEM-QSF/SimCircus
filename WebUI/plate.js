@@ -77,7 +77,7 @@ if(window.innerHeight > window.innerWidth){
     landscape = false;
     setTimeout(checkOrientation, 1000)
 }
-console.log(landscape)
+//console.log(landscape)
 
 /* Init drawing area */
 var width = $(document).width()*0.8;
@@ -85,8 +85,6 @@ var height = $(document).height()*0.9;
 var radius = Math.min(height,width)/2;
 $("#paper1").css("margin-top", (0.05*$(document).height()).toString() + "px");
 $("#paper1").css("margin-left", (0.1*$(document).width()).toString() + "px");
-console.log(height)
-console.log(width)
 var stroke = 10;
 var fade = 0;
 var paper = Raphael("paper1", width, height);
@@ -100,31 +98,49 @@ var arcLeft = paper.circularArc(width/2,height/2,radius-stroke,90,270).attr({
     stroke: "rgb(50,50,255)"
 });
 
-function drawCircles() {
-    var circleAmount = Math.floor(Math.random() * 6) + 4;
+function createColonies() {
+    var colonyAmount = Math.floor(Math.random() * 3) + 2;
 
-    var circleList = [];
+    for (var i = 0; i < colonyAmount; i ++) {
+        createColony();
+    }
+}
+
+
+function createColony() {
+    var notFound = true;
+    j = 0;
+
     var centerX = width/2;
     var centerY = height/2;
     var radius = (Math.min(height, width)-stroke)/2;
     var distance = 0;
     var angle = 0;
     var size = 0;
-    var tmp = 0;
 
-    for (var i = 0; i < circleAmount; i ++) {
+    while (j < 5 && notFound) {
         size = (15+Math.random()*30)*centerY/500;
         distance = Math.random()*radius-size-stroke;
         angle = Math.random()*2*Math.PI;
-        tmp = paper.circle(centerX+Math.cos(angle)*distance, centerY+Math.sin(angle)*distance, size).attr({'stroke-opacity': 0})
-        if (overlap(tmp, circleList)){
-            i --;
-            tmp.remove()
+        var colony = paper.circle(centerX+Math.cos(angle)*distance, centerY+Math.sin(angle)*distance, size).attr({'stroke-opacity': 0})
+        if (overlap(colony, colonyList)){
+            colony.remove()
         } else {
-            circleList.push(tmp);
+            colonyList.push(colony);
+            notFound = false;
+        }
+        if (! notFound) {
+            break;
         }
     }
-    return circleList;
+
+    if (notFound) {
+        return false;
+    } else {
+        return true;
+    }
+
+
 }
 
 function overlap(circ, list) {
@@ -143,10 +159,14 @@ function _overlap(circ1, circ2) {
     return (dist < (c1.r + c2.r));
 }
 
+function growColonies() {
+    var i = 0;
+}
+
 function setColonyColor(rgbString) {
-    for (var i = 0; i < circleList.length; i++) {
-        circleList[i].attr({
-            fill: 'r(0.5, 0.5)' + rgbString + "-" + rgbString +':'+ 2.5*circleList[i].attr("r") +'-rgb(255,255,255)'
+    for (var i = 0; i < colonyList.length; i++) {
+        colonyList[i].attr({
+            fill: 'r(0.5, 0.5)' + rgbString + "-" + rgbString +':'+ 2.5*colonyList[i].attr("r") +'-rgb(255,255,255)'
         })
     }
 }
