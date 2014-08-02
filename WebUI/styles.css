@@ -48,6 +48,22 @@ body {
     left:0;
 }
 
+#flash-left, #flash-right {
+    position: absolute;
+    margin-right: auto;
+    margin-left: auto;
+    z-index: -1;
+}
+
+#data-visualization {
+    display: none;
+}
+
+#flash-left {
+    height:100px;
+    width: 100px;
+}
+
 img {
     width:100%;
     margin-left: auto;

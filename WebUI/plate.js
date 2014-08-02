@@ -27,6 +27,13 @@ function setBlueLight(event, ui){
     arcLeft.attr({
         stroke: "rgb("+(50+value).toString()+","+(50+value).toString()+","+(255-value).toString()+")"
     });
+    var minFlashWidth = 0.3*flashWidth;
+    var maxFlashColor = 255;
+    var colorString = ((value)/100*(maxFlashColor)).toString();
+    leftFlash.attr({
+        fill: 'r(0.5, 0.5)rgb(' + colorString + "," + colorString +
+            ",255)-rgba(255,255,255):"+ (minFlashWidth + (flashWidth - minFlashWidth)*(100-value)/100).toString()
+    });
 }
 
 function setRedLight(event, ui){
@@ -43,6 +50,13 @@ function setRedLight(event, ui){
     value = 100-value
     arcRight.attr({
         stroke: "rgb("+(255-value).toString()+","+(50+value).toString()+","+(50+value).toString()+")"
+    });
+    var minFlashWidth = 0.3*flashWidth;
+    var maxFlashColor = 255;
+    var colorString = ((value)/100*(maxFlashColor)).toString();
+    rightFlash.attr({
+        fill: 'r(0.5, 0.5)rgb(255,' + colorString + "," + colorString +
+            ")-rgba(255,255,255):"+ (minFlashWidth + (flashWidth - minFlashWidth)*(100-value)/100).toString()
     });
 }
 
@@ -150,7 +164,7 @@ if (landscape) {
         max: 100,
         min: 0,
         orientation: "vertical",
-        change: setBlueLight,
+        slide: setBlueLight,
         value: 100,
         animate: "slow"
     }).draggable();
@@ -159,7 +173,7 @@ if (landscape) {
         max: 100,
         min: 0,
         orientation: "vertical",
-        change: setRedLight,
+        slide: setRedLight,
         value: 100,
         animate: "slow"
     }).draggable();
@@ -167,4 +181,21 @@ if (landscape) {
     $("#alert").addClass("visible")
 }
 
-var circleList = drawCircles();
+var colonyList = [];
+createColonies();
+console.log(colonyList);
+
+
+// Bulb gradients
+var flashWidth = 0.12*width
+var leftFlashPaper = Raphael("flash-left", flashWidth, flashWidth);
+var leftFlash = leftFlashPaper.circle(flashWidth/2,flashWidth/2,flashWidth/2).attr("stroke-opacity",0)
+var rightFlashPaper = Raphael("flash-right", flashWidth, flashWidth);
+var rightFlash = rightFlashPaper.circle(flashWidth/2,flashWidth/2,flashWidth/2).attr("stroke-opacity",0)
+
+setBlueLight(123, {value:100})
+setRedLight(123, {value:100})
+
+
+
+
