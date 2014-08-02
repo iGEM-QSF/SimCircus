@@ -96,7 +96,7 @@ var paper = Raphael("paper1", width, height);
 
 // Create plate background
 paper.circle(width/2, height/2, radius-stroke).attr({
-    fill: "rgb(235,252,215)",
+    fill: "rgb(230,230,230)",
     "stroke-opacity": 0
 });
 // Create light bars
@@ -217,7 +217,7 @@ function growFunction(value) {
 function setColonyColor(rgbString) {
     for (var i = 0; i < colonyList.length; i++) {
         colonyList[i].attr({
-            fill: 'r(0.5, 0.5)' + rgbString + "-" + rgbString +':'+ 2.5*colonyList[i].attr("r") +'-rgb(235,252,215)'
+            fill: 'r(0.5, 0.5)' + rgbString + "-" + rgbString +':'+ 2.3*colonyList[i].attr("r") +'-rgb(230,230,230)'
         })
     }
 }

@@ -53,6 +53,15 @@ body {
     left:0;
 }
 
+#left .ui-widget-content .ui-state-default {
+    background: rgb(150,150,220);
+    height: 8%;
+}
+#right .ui-widget-content .ui-state-default {
+    background: rgb(220,150,150);
+    height: 8%;
+}
+
 #flash-left, #flash-right {
     position: absolute;
     margin-right: auto;
@@ -94,7 +103,7 @@ footer {
     right: 0;
     bottom: 0;
     text-align: right;
-    padding-right:2%;
+    z-index: -1;
 }
 
 footer span {
