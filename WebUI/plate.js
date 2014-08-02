@@ -77,18 +77,29 @@ if(window.innerHeight > window.innerWidth){
     landscape = false;
     setTimeout(checkOrientation, 1000)
 }
-//console.log(landscape)
 
 /* Init drawing area */
 var width = $(document).width()*0.8;
 var height = $(document).height()*0.9;
+// Colony parameters
+var minSize = 15;
+var maxSize = 45;
+var scalingConstant = height/2/500;
+
 var radius = Math.min(height,width)/2;
-$("#paper1").css("margin-top", (0.05*$(document).height()).toString() + "px");
+
+$("#paper1").css("margin-top", (0.02*$(document).height()).toString() + "px");
 $("#paper1").css("margin-left", (0.1*$(document).width()).toString() + "px");
 var stroke = 10;
 var fade = 0;
 var paper = Raphael("paper1", width, height);
 
+// Create plate background
+paper.circle(width/2, height/2, radius-stroke).attr({
+    fill: "rgb(235,252,215)",
+    "stroke-opacity": 0
+});
+// Create light bars
 var arcRight = paper.circularArc(width/2,height/2,radius-stroke,270,90).attr({
     "stroke-width":10,
     stroke: "rgb(250,0,0)"
@@ -119,7 +130,11 @@ function createColony() {
     var size = 0;
 
     while (j < 5 && notFound) {
-        size = (15+Math.random()*30)*centerY/500;
+        if (growing) {
+            size = 5*scalingConstant;
+        } else {
+            size = (minSize+Math.random()*(maxSize-minSize))*scalingConstant;
+        }
         distance = Math.random()*radius-size-stroke;
         angle = Math.random()*2*Math.PI;
         var colony = paper.circle(centerX+Math.cos(angle)*distance, centerY+Math.sin(angle)*distance, size).attr({'stroke-opacity': 0})
@@ -143,10 +158,32 @@ function createColony() {
 
 }
 
+function isInside(circ) {
+    var params = circ.attr(["cx","cy","r"]);
+    var pointX = 0;
+    var pointY = 0;
+    var xDistance = 0;
+    var yDistance = 0;
+    var testPoints = 6;
+    for (var i = 0; i < 6; i++) {
+        pointX = params.cx + Math.cos(Math.PI*i/(testPoints/2))*params.r;
+        xDistance = Math.abs(width/2 - pointX);
+        pointY = params.cy + Math.sin(Math.PI*i/(testPoints/2))*params.r;
+        yDistance = Math.abs(height/2 - pointY);
+        if (Math.sqrt(xDistance*xDistance + yDistance*yDistance) >= radius - stroke*1.55){
+            console.log("is outside");
+            return false;
+        }
+    }
+    return true;
+}
+
 function overlap(circ, list) {
     for (var i = 0; i < list.length; i++){
-        if (_overlap(circ, list[i])){
-            return true;
+        if (circ !== list[i]){
+            if (_overlap(circ, list[i])){
+                return true;
+            }
         }
     }
     return false;
@@ -160,13 +197,27 @@ function _overlap(circ1, circ2) {
 }
 
 function growColonies() {
-    var i = 0;
+    var circle = 0;
+    for (var i=0; i<colonyList.length; i++) {
+        circle = colonyList[i];
+        if (!overlap(circle, colonyList) && isInside(circle)){
+            circle.attr("r", growFunction(circle.attr("r")))
+        }
+    }
+    if (Math.random() < 0.04) {
+        createColony()
+    }
+}
+
+function growFunction(value) {
+    var h = 1;
+    return value + (maxSize*0.8 - value)/maxSize*h*scalingConstant;
 }
 
 function setColonyColor(rgbString) {
     for (var i = 0; i < colonyList.length; i++) {
         colonyList[i].attr({
-            fill: 'r(0.5, 0.5)' + rgbString + "-" + rgbString +':'+ 2.5*colonyList[i].attr("r") +'-rgb(255,255,255)'
+            fill: 'r(0.5, 0.5)' + rgbString + "-" + rgbString +':'+ 2.5*colonyList[i].attr("r") +'-rgb(235,252,215)'
         })
     }
 }
@@ -203,7 +254,6 @@ if (landscape) {
 
 var colonyList = [];
 createColonies();
-console.log(colonyList);
 
 
 // Bulb gradients
@@ -216,6 +266,5 @@ var rightFlash = rightFlashPaper.circle(flashWidth/2,flashWidth/2,flashWidth/2).
 setBlueLight(123, {value:100})
 setRedLight(123, {value:100})
 
-
-
-
+var growing = true;
+setInterval(growColonies, 300);
