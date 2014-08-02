@@ -4,6 +4,7 @@
         <meta name="viewport" content="minimal-ui">
         <link href="jquery-ui/jquery-ui.css" rel="stylesheet">
         <link href="styles.css" rel="stylesheet">
+        <link href='http://fonts.googleapis.com/css?family=Advent+Pro:700' rel='stylesheet' type='text/css'>
         <style type="text/css">
 
         </style>
@@ -26,6 +27,7 @@
         <div id="data-visualization">
             <canvas id="chart" width="400" height="400"></canvas>
         </div>
+        <footer><a href="http://aaltohelsinki.com/"><span class="powered">Powered by</span><img src="aalto_helsinki_logo_left.svg"/><span class="logo-text">Aalto-Helsinki</span><span class="logo-text green">Bioworks</span><img src="aalto_helsinki_logo_right.svg"/></a></footer>
     </body>
     <script type="text/javascript" src="raphael-min.js"></script>
     <script src="jquery-ui/external/jquery/jquery.js"></script>
@@ -35,4 +37,11 @@
     <script type="text/javascript" src="sim.js"></script>
     <script src="Chart.min.js"></script>
     <script type="text/javascript" src="chart.js"></script>
+    <script type="text/javascript">
+        $("span.logo-text").css("font-size", (0.055*$(document).height()).toString() + "px");
+        $("footer img").css("height", (0.08*$(document).height()).toString() + "px");
+        $("span.logo-text").css("position", "relative");
+        $("span.logo-text").css("bottom", (0.025*$(document).height()).toString() + "px");
+        $("span.powered").css("font-size", (0.03*$(document).height()).toString() + "px");
+    </script>
 </html>
