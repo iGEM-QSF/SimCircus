@@ -75,7 +75,7 @@ window.onresize = function() {
 var landscape = true;
 if(window.innerHeight > window.innerWidth){
     landscape = false;
-    setTimeout(checkOrientation, 1000)
+    setTimeout(checkOrientation, 1000);
 }
 
 /* Init drawing area */

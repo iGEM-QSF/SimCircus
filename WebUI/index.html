@@ -13,6 +13,47 @@
         <div id="alert">
             <span>Please turn your device horizontally</span>
         </div>
+        <div id="help">
+            ?
+        </div>
+        <div id="tutorial-shades">
+            <div class="grad-left-right left-slider-shade shade"></div>
+            <div class="grad-right-left right-slider-shade shade"></div>
+            <div class="grad-middle middle-shade shade"></div>
+        </div>
+        <div id="tutorial">
+            <div id="tutorial-dish" class="info">
+                Bacteria are grown on a gel plate. As they divide, billions of bacteria form clear, round colonies, although a single bacterium cannot be seen by naked eye.
+                <table><tr>
+                    <td class="left"><a href="#" class="skip">Skip tutorial</a></td>
+                    <td class="right"><a href="#" class="next">Next</a></td>
+                </tr></table>
+            </div>
+            <div id="tutorial-color" class="info">
+                Bacteria produce different proteins naturally. With our technology, it is easy to get them to make a desired product. In this simulation, our bacteria produce proteins that glow red, blue or green color. Thus, one can see which of our three "channels" is currently on.<br/>
+                <div class="colony blue"></div>
+                <div class="colony green"></div>
+                <div class="colony red"></div>
+                <table><tr>
+                    <td>2/4</td>
+                    <td class="right"><a href="#" class="next">Next</a></td>
+                </tr></table>
+            </div>
+            <div id="tutorial-sliders" class="info">
+                Our bacteria are controlled by two different colors of lights. Blue light is used to "switch the channel", that is, to choose between different products. Red light is used as a "volume switch" that tunes the overall amount of production. This can be seen as the brightness of glow.
+                <table><tr>
+                    <td>3/4</td>
+                    <td class="right"><a href="#" class="next">Next</a></td>
+                </tr></table>
+            </div>
+            <div id="tutorial-graph" class="info">
+                When you click on the plate, you can see a graph of different protein production levels inside the bacteria. Here, you can see how even small changes in light brightness affects the overall production, and how you can set the final amounts to desired levels.<br/>Try it out!
+                <table><tr>
+                    <td></td>
+                    <td class="right"><a href="#" class="next">Start simulation!</a></td>
+                </tr></table>
+            </div>
+        </div>
         <div id="left">
             <div id="flash-left"></div>
             <img id="bulb-left" src="bulb.svg"/>
@@ -27,7 +68,7 @@
         <div id="data-visualization">
             <canvas id="chart" width="400" height="400"></canvas>
         </div>
-        <footer><a href="http://aaltohelsinki.com/"><span class="powered">SImulation powered by</span><img src="aalto_helsinki_logo_left.svg"/><span class="logo-text">Aalto-Helsinki</span><span class="logo-text green">Bioworks</span><img src="aalto_helsinki_logo_right.svg"/></a></footer>
+        <footer><a href="http://aaltohelsinki.com/"><span class="powered">Simulation powered by</span><img src="aalto_helsinki_logo_left.svg"/><span class="logo-text">Aalto-Helsinki</span><span class="logo-text green">Bioworks</span><img src="aalto_helsinki_logo_right.svg"/></a></footer>
     </body>
     <script type="text/javascript" src="raphael-min.js"></script>
     <script src="jquery-ui/external/jquery/jquery.js"></script>
@@ -43,5 +84,6 @@
     <script type="text/javascript" src="plate.js"></script>
     <script type="text/javascript" src="sim.js"></script>
     <script src="Chart.min.js"></script>
+    <script src="tutorial.js"></script>
     <script type="text/javascript" src="chart.js"></script>
 </html>
