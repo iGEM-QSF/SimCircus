@@ -164,7 +164,7 @@ body {
 }
 
 div img {
-    width:100%;
+    height:25%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -180,6 +180,24 @@ div img {
 
 #slider-right span, #slider-left span {
     width:120%;
+}
+
+.A, .B, .C {
+    position: absolute;
+    right:-10%;
+    font-family: "Advent Pro", sans-serif;
+}
+
+.A {
+    top: 25%;
+}
+
+.B {
+    top: 52.5%;
+}
+
+.C {
+    top: 80%;
 }
 
 footer {

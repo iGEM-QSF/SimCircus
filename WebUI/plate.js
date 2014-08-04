@@ -257,7 +257,7 @@ createColonies();
 
 
 // Bulb gradients
-var flashWidth = 0.12*width
+var flashWidth = 0.22*height
 var leftFlashPaper = Raphael("flash-left", flashWidth, flashWidth);
 var leftFlash = leftFlashPaper.circle(flashWidth/2,flashWidth/2,flashWidth/2).attr("stroke-opacity",0)
 var rightFlashPaper = Raphael("flash-right", flashWidth, flashWidth);

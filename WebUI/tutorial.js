@@ -67,6 +67,8 @@ $(".colony").css("width", (width*0.08).toString() + "px")
 $(".colony").css("border-radius", (width*0.1).toString() + "px")
 $(".colony").css("margin-left", (width*0.06).toString() + "px")
 
+$(".A, .B, .C").css("font-size", (width*0.02).toString() + "px");
+
 $("#help").css("font-size", (height*0.15).toString() + "px");
 $("#help").css("top", (height*0.010).toString() + "px");
 $("#help").css("right", (width*0.14).toString() + "px");
