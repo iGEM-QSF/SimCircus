@@ -47,11 +47,8 @@ body {
     text-align: right;
 }
 
-#tutorial a {
-    text-decoration: none;
-}
-
-#tutorial {
+#tutorial span {
+    cursor: pointer;
 }
 
 #tutorial div.info {

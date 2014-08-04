@@ -3,7 +3,7 @@ function startTutorial(){
         $(this).css("margin-top", (height/2*0.7).toString() + "px")
         $(this).css("font-size", (height*0.04).toString() + "px");
         $("#"+$(this).attr("id")+" table").css("margin-top", (height*0.015).toString() + "px");
-        $("#"+$(this).attr("id")+" a").each(function(){
+        $("#"+$(this).attr("id")+" span").each(function(){
             console.log()
             $(this).css("font-size", (height*0.045).toString() + "px");
         })
