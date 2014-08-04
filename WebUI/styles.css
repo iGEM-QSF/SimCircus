@@ -257,14 +257,14 @@ a {
 }
 
 .grad-right-left {
-    background: -webkit-linear-gradient(left, rgba(255,255,255, 0) , rgba(70,70,70,0.8)); /* For Safari 5.1 to 6.0 */
+    background: -webkit-linear-gradient(right, rgba(255,255,255, 0) , rgba(70,70,70,0.8)); /* For Safari 5.1 to 6.0 */
     background: -o-linear-gradient(right, rgba(255,255,255, 0), rgba(70,70,70,0.8)); /* For Opera 11.1 to 12.0 */
     background: -moz-linear-gradient(right, rgba(255,255,255, 0), rgba(70,70,70,0.8)); /* For Firefox 3.6 to 15 */
     background: linear-gradient(to right, rgba(255,255,255, 0) , rgba(70,70,70,0.8)); /* Standard syntax */
 }
 
 .grad-left-right {
-    background: -webkit-linear-gradient(right, rgba(255,255,255, 0) , rgba(70,70,70,0.8)); /* For Safari 5.1 to 6.0 */
+    background: -webkit-linear-gradient(left, rgba(255,255,255, 0) , rgba(70,70,70,0.8)); /* For Safari 5.1 to 6.0 */
     background: -o-linear-gradient(left, rgba(255,255,255, 0), rgba(70,70,70,0.8)); /* For Opera 11.1 to 12.0 */
     background: -moz-linear-gradient(left, rgba(255,255,255, 0), rgba(70,70,70,0.8)); /* For Firefox 3.6 to 15 */
     background: linear-gradient(to left, rgba(255,255,255, 0) , rgba(70,70,70,0.8)); /* Standard syntax */
