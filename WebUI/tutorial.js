@@ -32,25 +32,27 @@ $("#tutorial-dish .skip").click(function(){
 })
 
 $("#tutorial-dish .next").click(function(){
-    $("#tutorial-dish").fadeOut();
-    $("#tutorial-color").fadeIn();
+    $("#tutorial-dish").fadeOut(400, function(){
+        $("#tutorial-color").fadeIn();
+    });
 })
 
 $("#tutorial-color").click(function(){
-    $("#tutorial-color").fadeOut();
-    $("#tutorial-sliders").fadeIn();
-
+    $("#tutorial-color").fadeOut(400, function(){
+        $("#tutorial-sliders").fadeIn();
+        $(".middle-shade").fadeIn();
+    });
     $(".shade").fadeOut();
-    $(".middle-shade").fadeIn();
 })
 
 $("#tutorial-sliders").click(function(){
-    $("#tutorial-sliders").fadeOut();
-    $("#tutorial-graph").fadeIn();
+    $("#tutorial-sliders").fadeOut(400, function(){
+        $("#tutorial-graph").fadeIn();
 
+        $(".left-slider-shade").fadeIn();
+        $(".right-slider-shade").fadeIn();
+    });
     $(".shade").fadeOut();
-    $(".left-slider-shade").fadeIn();
-    $(".right-slider-shade").fadeIn();
 })
 
 $("#tutorial-graph").click(function(){
