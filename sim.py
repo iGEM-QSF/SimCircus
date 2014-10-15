@@ -66,10 +66,10 @@ class Simulation(threading.Thread):
     def derivativeYF1(self, currentConcentration):
         return self.promoter1 * self.rbs1 + \
             self.dePhosCoeff1 * self.getAmount('PYF1') - \
-            (self.degCoeffYF1 + self.blue_intensity) * currentConcentration
+            (self.degCoeffYF1 + (1 - self.blue_intensity)) * currentConcentration
 
     def derivativePYF1(self, currentConcentration):
-        return self.blue_intensity * self.getAmount('YF1') - \
+        return (1 - self.blue_intensity) * self.getAmount('YF1') - \
             (self.dePhosCoeff1 + self.degCoeffYF1) * currentConcentration
 
     def derivativeFixJ(self, currentConcentration):
