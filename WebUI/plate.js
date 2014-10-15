@@ -130,6 +130,9 @@ function createColony() {
     var size = 0;
 
     while (j < 5 && notFound) {
+        if (colonyList.length >= 25){
+            notFound = false;
+        }
         if (growing) {
             size = 5*scalingConstant;
         } else {
