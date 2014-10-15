@@ -1,5 +1,102 @@
+@font-face {
+    font-family: "Bebas Neue";
+    src: url(BebasNeue.otf) format("truetype");
+}
+
 body {
     margin: 0;
+}
+
+.next {
+    color: #0AA699;
+}
+
+.skip {
+    color: red;
+}
+
+#help {
+    font-family: "Advent Pro", sans-serif;
+    position: absolute;
+    text-align: center;
+    cursor: pointer;
+    z-index: 15;
+    color:#0AA699;
+}
+
+#tutorial {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index:10;
+    font-family: "Advent Pro", sans-serif;
+    display: none;
+}
+
+#tutorial table {
+    width:100%;
+}
+
+#tutorial td {
+    width:50%;
+}
+
+#tutorial td.right {
+    text-align: right;
+}
+
+#tutorial span {
+    cursor: pointer;
+}
+
+#tutorial div.info {
+    background-color: white;
+    padding:1em;
+    display: none;
+    width: 42%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 15%;
+    border-style: solid;
+    border-width: 0.1em;
+    border-color: rgb(120,120,120);
+    border-radius: 1em;
+    position: relative;
+}
+
+.colony {
+    display: inline-block;
+}
+
+.colony.red {
+    background: -webkit-radial-gradient(rgb(240,100,100), rgb(240,100,100), rgb(230,230,230)); /* Safari 5.1 to 6.0 */
+    background: -o-radial-gradient(rgb(240,100,100), rgb(240,100,100), rgb(230,230,230)); /* For Opera 11.6 to 12.0 */
+    background: -moz-radial-gradient(rgb(240,100,100), rgb(240,100,100), rgb(230,230,230)); /* For Firefox 3.6 to 15 */
+    background: radial-gradient(rgb(240,100,100), rgb(240,100,100), rgb(230,230,230)); /* Standard syntax */
+}
+
+.colony.green {
+    background: -webkit-radial-gradient(rgb(100,240,100), rgb(100,240,100), rgb(230,230,230)); /* Safari 5.1 to 6.0 */
+    background: -o-radial-gradient(rgb(100,240,100), rgb(100,240,100), rgb(230,230,230)); /* For Opera 11.6 to 12.0 */
+    background: -moz-radial-gradient(rgb(100,240,100), rgb(100,240,100), rgb(230,230,230)); /* For Firefox 3.6 to 15 */
+    background: radial-gradient(rgb(100,240,100), rgb(100,240,100), rgb(230,230,230)); /* Standard syntax */
+}
+
+.colony.blue {
+    background: -webkit-radial-gradient(rgb(100,100,240), rgb(100,100,240), rgb(230,230,230)); /* Safari 5.1 to 6.0 */
+    background: -o-radial-gradient(rgb(100,100,240), rgb(100,100,240), rgb(230,230,230)); /* For Opera 11.6 to 12.0 */
+    background: -moz-radial-gradient(rgb(100,100,240), rgb(100,100,240), rgb(230,230,230)); /* For Firefox 3.6 to 15 */
+    background: radial-gradient(rgb(100,100,240), rgb(100,100,240), rgb(230,230,230)); /* Standard syntax */
+}
+
+#data-visualization {
+    position: absolute;
+    top:0;
+    left:0;
+    background-color: rgba(255,255,255,0.8);
+    z-index: 2;
 }
 
 #alert {
@@ -14,7 +111,7 @@ body {
     bottom:0;
     right:0;
     left:0;
-    z-index:2;
+    z-index:16;
     text-align: center;
 }
 
@@ -30,7 +127,7 @@ body {
     width:10%;
     position: fixed;
     top:0;
-    z-index: 1;
+    z-index: 3;
 }
 
 #right {
@@ -41,8 +138,33 @@ body {
     left:0;
 }
 
-img {
-    width:100%;
+#left .ui-widget-content .ui-state-default {
+    background: rgb(150,150,220);
+    height: 8%;
+}
+#right .ui-widget-content .ui-state-default {
+    background: rgb(220,150,150);
+    height: 8%;
+}
+
+#flash-left, #flash-right {
+    position: absolute;
+    margin-right: auto;
+    margin-left: auto;
+    z-index: -1;
+}
+
+#data-visualization {
+    display: none;
+}
+
+#flash-left {
+    height:100px;
+    width: 100px;
+}
+
+div img {
+    height:25%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -58,4 +180,110 @@ img {
 
 #slider-right span, #slider-left span {
     width:120%;
+}
+
+.A, .B, .C {
+    position: absolute;
+    right:-10%;
+    font-family: "Advent Pro", sans-serif;
+}
+
+.A {
+    top: 25%;
+}
+
+.B {
+    top: 52.5%;
+}
+
+.C {
+    top: 80%;
+}
+
+footer {
+    position: absolute;
+    left:0;
+    right: 0;
+    bottom: 0;
+    text-align: right;
+    z-index: 1;
+}
+
+footer span {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+footer img {
+    display: inline-block;
+}
+
+footer .powered {
+    font-family: "Advent Pro", sans-serif;
+}
+
+footer .logo-text {
+    font-family: "Bebas Neue", Verdana, Tahoma;
+    padding-left: 0.1em;
+    padding-right: 0.1em;
+}
+
+footer .green {
+    color:#0AA699;
+}
+
+a {
+    color: black;
+}
+
+.shade {
+    display: none;
+}
+
+.left-slider-shade, .right-slider-shade {
+    height:100%;
+    width:20%;
+    position: fixed;
+    top:0;
+    z-index: 9;
+}
+
+.left-slider-shade {
+    left:0;
+}
+
+.right-slider-shade {
+    right:0;
+}
+
+.middle-shade {
+    height:100%;
+    width:80%;
+    position: fixed;
+    top:0;
+    z-index: 9;
+}
+
+.middle-shade {
+    left:10%;
+}
+.grad-middle {
+    background: -webkit-linear-gradient(left, rgba(255,255,255, 0) , rgba(70,70,70,0.8), rgba(255,255,255, 0)); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(right, rgba(255,255,255, 0), rgba(70,70,70,0.8), rgba(255,255,255, 0)); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(right, rgba(255,255,255, 0), rgba(70,70,70,0.8), rgba(255,255,255, 0)); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to right, rgba(255,255,255, 0) , rgba(70,70,70,0.8), rgba(255,255,255, 0)); /* Standard syntax */
+}
+
+.grad-right-left {
+    background: -webkit-linear-gradient(right, rgba(255,255,255, 0) , rgba(70,70,70,0.8)); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(right, rgba(255,255,255, 0), rgba(70,70,70,0.8)); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(right, rgba(255,255,255, 0), rgba(70,70,70,0.8)); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to right, rgba(255,255,255, 0) , rgba(70,70,70,0.8)); /* Standard syntax */
+}
+
+.grad-left-right {
+    background: -webkit-linear-gradient(left, rgba(255,255,255, 0) , rgba(70,70,70,0.8)); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(left, rgba(255,255,255, 0), rgba(70,70,70,0.8)); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(left, rgba(255,255,255, 0), rgba(70,70,70,0.8)); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to left, rgba(255,255,255, 0) , rgba(70,70,70,0.8)); /* Standard syntax */
 }
