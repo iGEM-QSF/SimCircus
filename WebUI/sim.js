@@ -47,11 +47,11 @@ function getAmount(proteinName){
 }
 
 function derivativeYF1(currentConcentration){
-    return promoter1 * rbs1 + dePhosCoeff1 * getAmount('PYF1') - (degCoeffYF1 + blue_intensity) * currentConcentration;
+    return promoter1 * rbs1 + dePhosCoeff1 * getAmount('PYF1') - (degCoeffYF1 + (1 - blue_intensity)) * currentConcentration;
 }
 
 function derivativePYF1(currentConcentration){
-    return blue_intensity * getAmount('YF1') - (dePhosCoeff1 + degCoeffYF1) * currentConcentration;
+    return (1 - blue_intensity) * getAmount('YF1') - (dePhosCoeff1 + degCoeffYF1) * currentConcentration;
 }
 
 function derivativeFixJ(currentConcentration){
