@@ -204,7 +204,7 @@ function growColonies() {
             circle.attr("r", growFunction(circle.attr("r")))
         }
     }
-    if (Math.random() < 0.04) {
+    if (Math.random() < 0.025) {
         createColony()
     }
 }
